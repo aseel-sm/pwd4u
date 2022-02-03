@@ -1,13 +1,11 @@
+
 <?php 
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
- 
- 
 
-?>
-        <!-- Topbar -->
+?><!-- Topbar -->
         <nav
             class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
           >
@@ -18,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
             >
               <i class="fa fa-bars"></i>
             </button>
-  <h4>Contractor</h4>
+  <h4>Admin</h4>
           
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -38,17 +36,15 @@ if (session_status() === PHP_SESSION_NONE) {
               </li>
               <li class="nav-item dropdown no-arrow">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link"
                   href="#"
-                  id="userDropdown"
                   role="button"
-                  data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
                     >
-                    <?php $_SESSION['name']?></span
+                    <?php echo $_SESSION['name']?></span
                   > 
                 </a>     
               </li>

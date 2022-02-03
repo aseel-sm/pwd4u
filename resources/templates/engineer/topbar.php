@@ -1,4 +1,8 @@
-        <!-- Topbar -->
+     <?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}?>
+     
+     <!-- Topbar -->
         <nav
             class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
           >
@@ -19,6 +23,16 @@
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a
+                  class="nav-link "
+                  href="../../resources/library/logout.php"
+                >
+                <div class="btn btn-danger btn-circle">
+                <i class="fas fa-sign-out-alt  text-white"></i>
+                </div> 
+                </a>     
+              </li>
+              <li class="nav-item dropdown no-arrow">
+                <a
                   class="nav-link dropdown-toggle"
                   href="#"
                   id="userDropdown"
@@ -29,7 +43,7 @@
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
                     >
-                    Aseel Abdulla</span
+                    <?php $_SESSION['name']?></span
                   > 
                 </a>     
               </li>

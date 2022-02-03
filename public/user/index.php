@@ -1,5 +1,8 @@
 <?php 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
+$type="user";
+
+require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
 ?> 
 <!DOCTYPE html>
 <html lang="en">
