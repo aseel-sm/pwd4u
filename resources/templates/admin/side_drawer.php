@@ -53,8 +53,8 @@
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-              <a class="collapse-item" href="buttons.html">Manage Users</a>
-              <a class="collapse-item" href="cards.html">New registrations</a>
+              <a class="collapse-item" href="user_list.php?user_type=1">Manage Users</a>
+              <a class="collapse-item" href="new_registration.php?user_type=1">New registrations</a>
             </div>
           </div>
         </li>

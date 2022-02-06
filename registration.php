@@ -1,20 +1,22 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+  if (isset($_SESSION['authenticated'])&&isset($_SESSION['user_type'])) {
+      if ($_SESSION['user_type']!=$type || $_SESSION['authenticated']!=true) {
+          header("Location:public/".$_SESSION['user_type']."/");
+      }
   }
-  if(isset($_SESSION['authenticated'])&&isset($_SESSION['user_type']))
-  {
-  
-  
-    if ($_SESSION['user_type']!=$type || $_SESSION['authenticated']!=true) {
-    header("Location:public/".$_SESSION['user_type']."/");
-   
-  
-  }}
 require_once(realpath(dirname(__FILE__)."//resources/")."/config.php");
  require_once(realpath(dirname(__FILE__)."//resources/library")."/utilities.php");
+$district_list=get_districts();
+
+
+//  while($dis=mysqli_fetch_assoc(get_districts())) {
+//   echo "id: " . $dis["id"]. " - Name: " . $dis["district"]. "<br>";
+// }
 $errMsg=$cetErr="";
-$name = $email = $address = $password = $confirm = $usertype =$phone=$licence=$qualification= "";
+$name = $email = $address = $password = $confirm = $usertype =$phone=$licence=$qualification=$district=$taluk= "";
 function test_input($data)
 {
     $data = trim($data);
@@ -57,13 +59,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     $errMsg=$errMsg."Certificate is required\n";
                 }
+                
+
+                if (empty($_POST["district"])) {
+                    $errMsg=$errMsg."No District given\n";
+                } else {
+                    $district = test_input($_POST["district"]);
+                }
+                
+                
+                if ($usertype==2) {
+                    if (empty($_POST["taluk"])) {
+                        $errMsg=$errMsg."No Taluk given\n";
+                    } else {
+                        $taluk = test_input($_POST["taluk"]);
+                    }
+                }
             } elseif ($usertype==3) {
                 if (empty($_POST["licence"])) {
                     $errMsg=$errMsg."Licence number required\n";
                 } else {
                     $licence = test_input($_POST["licence"]);
                     $is_licence_used=is_licence_used($licence);
-                    $errMsg=$errMsg."Licence number used\n";
+                    if ($is_licence_used==1) {
+                        $errMsg=$errMsg."Licence number used\n";
+                    }
                 }
             }
             if ($confirm==$password && $errMsg=='') {
@@ -73,10 +93,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (mysqli_query($conn, $sql)) {
                     $signUpSuccess=1;
                     $new_user_id=get_userid_by_phone($phone);
-                    if ($usertype==4||$usertype==2) {
+                    if ($usertype==2) {
                         $path=CERTFICATE_PATH."/".$phone;
                         if (move_uploaded_file($file_tmp, $path)) {
-                            $sql_add_details="INSERT INTO `employee_details`(`eId`, `qualification`, `certificatePath`) VALUES ('$new_user_id','$qualification','$phone')";
+                            $sql_add_details="INSERT INTO `overseer`(`id`, `qualification`, `certificatePath`,`tId`) VALUES ('$new_user_id','$qualification','$phone',$taluk)";
                         } else {
                             $signUpSuccess=0;
                             echo "Error on Upload-----",$path,'\n';
@@ -86,6 +106,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "Error: " . $sql_add_details . "<br>" . mysqli_error($conn);
                         }
                     }
+                    if ($usertype==4) {
+                        $path=CERTFICATE_PATH."/".$phone;
+                        if (move_uploaded_file($file_tmp, $path)) {
+                            $sql_add_details="INSERT INTO `engineer`(`id`, `qualification`, `certificatePath`,`dId`) VALUES ('$new_user_id','$qualification','$phone',$district)";
+                        } else {
+                            $signUpSuccess=0;
+                            echo "Error on Upload-----",$path,'\n';
+                        }
+                        if (!mysqli_query($conn, $sql_add_details)) {
+                            $signUpSuccess=0;
+                            echo "Error: " . $sql_add_details . "<br>" . mysqli_error($conn);
+                        }
+                    }
+
+
+
+
+
                     if ($usertype==3) {
                         $sql_add_details="INSERT INTO `contractor`(`cId`, `cLicense`) VALUES ('$new_user_id','$licence')";
                         if (!mysqli_query($conn, $sql_add_details)) {
@@ -95,29 +133,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
 
 
-                    if($signUpSuccess==1){
-
-                      $_SESSION['authenticated']="true";
-                      if($usertype==1)
-                      $_SESSION['user_type']="user";
-                      if($usertype==2)
-                      $_SESSION['user_type']="overseer";
-                      if($usertype==3)
-                      $_SESSION['user_type']="contractor";
-                      if($usertype==4)
-                      $_SESSION['user_type']="engineer";
-                      
-                      setcookie(
-                          "id",
-                          $new_user_id,
-                          time() + (10 * 365 * 24 * 60 * 60),'/'
-                      );
+                    if ($signUpSuccess==1) {
                       
                       
-                      header("Location:public/".$_SESSION['user_type']."/");
-                      
-                      }
-
+                        header("Location:public/waiting.php");
+                    }
                 } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
@@ -266,10 +286,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }?>>Senior Engineer</option>
                         </select>
                       </div>
-                      <div class="my-1" style="width: 100%;
-    margin-top: 0.25rem;
-    font-size: 80%;
-    color: #e74a3b;"><?php echo $cetErr?></div>
+                      <div class="form-group col-md-6 d-none" data-district>
+                        <select class="form-control"    value="" name="district"   id="district_select">
+                          <option class="hidden" selected value="" disabled>
+                           District
+                          </option>
+
+                          <?php
+                          while ($dist=mysqli_fetch_assoc($district_list)) {
+                              $dis_id=$dist['id'];
+                              $dis_name=$dist['district'];
+                              $district==$dis_id?$dis_status='required':$dis_status='';
+                              
+
+                              echo "<option value=' $dis_id' $dis_status>$dis_name</option> ";
+                          }
+                         
+                          ?>
+                     
+                          
+                        </select>
+                      </div>
+                      <div class="form-group col-md-6 d-none" data-taluk>
+                        <select class="form-control"    value="" name="taluk"  id="taluk"  >
+                          <option class="hidden" selected value="" disabled>
+                           Taluk
+                          </option>
+
+                         
+                     
+                          
+                        </select>
+                      </div>
+             
 
                       <div class="form-group col-md-6 d-none"   data-qualification>
                         <input
@@ -291,27 +340,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           placeholder="Licence Number"
                         />
                       </div>
-                      <div class="my-1" style="width: 100%;
-    margin-top: 0.25rem;
-    font-size: 80%;
-    color: #e74a3b;"><?php echo $errMsg?></div>
-                    </div>
+                   
                     <div class="form-row d-none"  data-certificate>
                       <div class="form-group col-md-6">
                           
                  
-                        <label for="">Upload your certificate</label>
+                        <label for="">Upload your certificate(PDF only)</label>
                         <input
                           type="file" 
                           class="form-control"
                           id=""
                           name="certificate"
                           placeholder="Certificate"
+                          accept="application/pdf"
                         />
                       </div>
                     </div>
             
-    
+                    <div class="my-1" style="width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #e74a3b;"><?php echo $errMsg?></div>
+                    </div>
                     </div>
                     <div class="form-row justify-content-center" >
                       <div class="form-group">
@@ -341,5 +391,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script>
+
+
+
+
+$("#district_select").change(function () {
+let id = $('#district_select').val(); //get the current value's option
+console.log(id);
+$.ajax({
+  type: "POST",
+  url: "resources/library/getTaluksbasedOnDistrict",
+  data: { id: id },
+  success: function (data) {
+    console.log(data);
+    let options = JSON.parse(data);
+    for (i = 0; i < options.data.length; i++) {
+      $("#taluk").append(`<option value="${options.data[i].id}">
+   ${options.data[i].name}
+</option>`);
+    }
+  },
+});
+});
+
+
+    </script>
   </body>
 </html>

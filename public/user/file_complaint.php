@@ -1,5 +1,61 @@
 <?php 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
+
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+$title=$desc=$selectedDis=$selectedTal=$image=$errMsg="";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+    if (isset($_POST['submit'])) {
+    
+
+      $title = test_input($_POST["title"]);
+      $selectedDis = test_input($_POST["district"]);
+      $selectedTal = test_input($_POST["taluk"]);
+      $desc = test_input($_POST["desc"]);
+ 
+      if (isset($_FILES['image'])) {
+        $file_name = $_FILES['image']['name'];
+        $file_size =$_FILES['image']['size'];
+        $file_tmp =$_FILES['image']['tmp_name'];
+        $file_type=$_FILES['image']['type'];
+    } else {
+        $errMsg=$errMsg."Image is required\n";
+    }
+
+    if ($errMsg=='') {
+      $path=IMAGE_PATH."/".bin2hex(random_bytes('6'));
+      if (move_uploaded_file($file_tmp, $path)) {
+        $sql="INSERT INTO `complaint` (`id`, `title`, `description`,`talukId`, `image` )  VALUES ('$title','$desc','$phone',$selectedTal,'$path')";
+        if (mysqli_query($conn, $sql)) {
+          echo "<script>alert('Filed Complaint');";
+          header("Location:/view_compliant.php");
+        }
+        else {
+          echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+      }
+    } else {
+       
+        echo "Error on Upload-----",$path,'\n';
+    }
+
+
+
+    }
+    }
+}
+
+
+
+
+
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +113,29 @@ require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
+    <script>
+$("#district_select").change(function () {
+let id = $('#district_select').val(); //get the current value's option
+console.log(id);
+$.ajax({
+  type: "POST",
+  url: "../../resources/library/getTaluksbasedOnDistrict",
+  data: { id: id },
+  success: function (data) {
+    console.log(data);
+    let options = JSON.parse(data);
+    console.log(options);
+    for (i = 0; i < options.data.length; i++) {
+      $("#taluk").append(`<option value="${options.data[i].id}">
+   ${options.data[i].taluk_name}
+</option>`);
+    }
+  },
+});
+});
+
+
+    </script>
 </body>
 
 

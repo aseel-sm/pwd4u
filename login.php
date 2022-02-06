@@ -1,16 +1,19 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+    session_start();
 }
-if(isset($_SESSION['authenticated'])&&isset($_SESSION['user_type']))
-{
+if(isset($_SESSION['not_accepted'])){
 
+  if($_SESSION['not_accepted']==true) {
 
-  if ($_SESSION['user_type']!=$type || $_SESSION['authenticated']!=true) {
-  header("Location:public/".$_SESSION['user_type']."/");
- 
-
-}}
+    header("Location:public/waiting.php");
+}
+}
+if (isset($_SESSION['authenticated'])&&isset($_SESSION['user_type'])) {
+    if ($_SESSION['user_type']!=$type || $_SESSION['authenticated']!=true) {
+        header("Location:public/".$_SESSION['user_type']."/");
+    }
+}
 require_once(realpath(dirname(__FILE__)."//resources/")."/config.php");
  require_once(realpath(dirname(__FILE__)."//resources/library")."/utilities.php");
 $errMsg="";
@@ -28,32 +31,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_exist=is_user_exist($phone);
         $password = test_input($_POST["password"]);
         if ($user_exist==1) {
+            $isAuthenticated=authenticate($phone, $password, 'users'); //check password and if true, return array(usertype,id) else array(-1)
+            $helllo=$isAuthenticated['status'];
+        
+            if ($isAuthenticated!==false) {
+                if ($isAuthenticated['status']==0) {
 
-            $isAuthenticated=authenticate($phone,$password,'users'); //check password and if true, return array(usertype,id) else array(-1)
-          
-            if($isAuthenticated!==false){
-              $_SESSION['authenticated']="true";
-              if($isAuthenticated['type']==0)
-              $_SESSION['user_type']="admin";
-              if($isAuthenticated['type']==1)
-              $_SESSION['user_type']="user";
-              if($isAuthenticated['type']==2)
-              $_SESSION['user_type']="overseer";
-              if($isAuthenticated['type']==3)
-              $_SESSION['user_type']="contractor";
-              if($isAuthenticated['type']==4)
-              $_SESSION['user_type']="engineer";          
-              $_SESSION['name']=$isAuthenticated['name'];          
-              $_SESSION['id']=$isAuthenticated['id'];          
-              setcookie(
-                  "id",
-                  $isAuthenticated[1],
-                  time() + (10 * 365 * 24 * 60 * 60),'/'
-              );     
-              header("Location:public/".$_SESSION['user_type']."/");
-            }
-            else{
-              $errMsg=$errMsg."Wrong Password\n";
+                  $_SESSION['not_accepted']="true";
+                    header("Location:public/waiting.php");
+                }
+                else{
+                            
+                $_SESSION['authenticated']="true";
+                if ($isAuthenticated['type']==0) {
+                    $_SESSION['user_type']="admin";
+                }
+                if ($isAuthenticated['type']==1) {
+                    $_SESSION['user_type']="user";
+                }
+                if ($isAuthenticated['type']==2) {
+                    $_SESSION['user_type']="overseer";
+                }
+                if ($isAuthenticated['type']==3) {
+                    $_SESSION['user_type']="contractor";
+                }
+                if ($isAuthenticated['type']==4) {
+                    $_SESSION['user_type']="engineer";
+                }
+                $_SESSION['name']=$isAuthenticated['name'];
+                $_SESSION['id']=$isAuthenticated['id'];
+                setcookie(
+                    "id",
+                    $isAuthenticated[1],
+                    time() + (10 * 365 * 24 * 60 * 60),
+                    '/'
+                );
+            header("Location:public/".$_SESSION['user_type']."/");
+                }
+
+    
+            } else {
+                $errMsg=$errMsg."Wrong Password\n";
             }
         } else {
             $errMsg=$errMsg."User phone number doesnt exist\n";

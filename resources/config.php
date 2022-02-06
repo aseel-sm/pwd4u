@@ -17,6 +17,7 @@ if (!$conn) {
 define("TEMPLATES_PATH", realpath(dirname(__DIR__)."/resources/templates"));
 define("CSS_PATH", realpath(dirname(__DIR__)."/css"));
 define("CERTFICATE_PATH", realpath(dirname(__DIR__)."/uploaded_files/certificates/"));
+define("IMAGE_PATH", realpath(dirname(__DIR__)."/uploaded_files/images/"));
 
 
 // echo TEMP_PATH;
