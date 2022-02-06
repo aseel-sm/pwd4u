@@ -207,6 +207,10 @@ function get_complaint_status($code){
 
     if($code==1)
     return "Analysis report submitted to engineer";
+    if($code==2)
+    return "Verified by Senior Engineer and Initial report submitted";
+    if($code==3)
+    return "Rejected by Senior Engineer";
     
 }
 
@@ -258,3 +262,31 @@ function get_complaints_by_taluk($id)
     }
 }
 // get_complaints_by_taluk(5);
+
+
+function get_district_by_user_id($id){
+    global $conn;
+    $sql="SELECT dId FROM `engineer` WHERE id=$id";
+    if (mysqli_query($conn, $sql)) {
+        $result=mysqli_query($conn, $sql);
+        $result=mysqli_fetch_assoc($result);
+        // var_dump($result);
+        return $result['dId'];
+    }
+}
+
+function get_complaints_by_district($id)
+{
+    global $conn;
+    $sql="select * from complaint where status=1 AND talukId IN (SELECT id FROM taluk WHERE dId=$id)";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+// get_district_by_user_id(20);
+// get_complaints_by_district(10);

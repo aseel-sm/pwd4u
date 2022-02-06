@@ -66,7 +66,7 @@
         <li class="nav-item">
           <a
             class="nav-link "
-        href="verify_report.php"
+        href="verify_analysis.php"
           >
             <i class="fas fa-fw fa-file"></i>
             <span>Analisys Reports</span>

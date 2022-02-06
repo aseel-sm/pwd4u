@@ -19,6 +19,7 @@ define("CSS_PATH", realpath(dirname(__DIR__)."/css"));
 define("CERTFICATE_PATH", realpath(dirname(__DIR__)."/uploaded_files/certificates/"));
 define("IMAGE_PATH", realpath(dirname(__DIR__)."/uploaded_files/images/"));
 define("ANALYSIS_PATH", realpath(dirname(__DIR__)."/uploaded_files/analysis/"));
+define("REPORT_PATH", realpath(dirname(__DIR__)."/uploaded_files/reports/"));
 
 
 // echo TEMP_PATH;

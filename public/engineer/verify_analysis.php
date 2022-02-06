@@ -2,8 +2,45 @@
 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 $type="engineer";
-
+$errMsg="";
 require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+  if (isset($_POST['submit'])) {
+  
+   $compId= $_POST['cId'];
+    if (isset($_FILES['report'])) {
+      $file_name = $_FILES['report']['name'];
+      $file_size =$_FILES['report']['size'];
+      $file_tmp =$_FILES['report']['tmp_name'];
+      $file_type=$_FILES['report']['type'];
+  } else {
+      $errMsg="File is required\n";
+  }
+  if ($errMsg=='') {
+    $hex=bin2hex(random_bytes('7'));
+    $path=REPORT_PATH."/".$hex;
+    $userId=$_SESSION['id'];
+    if (move_uploaded_file($file_tmp, $path)) {
+      $sql="UPDATE `complaint` SET `eId`='$userId',`status`='2',`initial`='$hex' WHERE id=$compId";
+      if (mysqli_query($conn, $sql)) {
+        echo "<script>alert('Report Submitted ');</script>";
+ header("Location:index.php");
+      }
+      else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+  } else {
+     
+      echo "Error on Upload-----",$path,'\n';
+  }
+
+
+
+  }
+  }}
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +89,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
          <!-- End of Content Wrapper -->
 
             <?php 
-	 require_once(TEMPLATES_PATH . "\\engineer\\verify_report.php");
+	 require_once(TEMPLATES_PATH . "\\engineer\\verify_analysis.php");
 
 
 ?>
@@ -72,6 +109,12 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
+           <!-- Page level plugins -->
+           <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 
