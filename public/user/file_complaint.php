@@ -1,4 +1,9 @@
 <?php 
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+  
+}
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 
 function test_input($data)
@@ -30,12 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($errMsg=='') {
-      $path=IMAGE_PATH."/".bin2hex(random_bytes('6'));
+      $hex=bin2hex(random_bytes('6'));
+      $path=IMAGE_PATH."/".$hex;
+      $userId=$_SESSION['id'];
       if (move_uploaded_file($file_tmp, $path)) {
-        $sql="INSERT INTO `complaint` (`id`, `title`, `description`,`talukId`, `image` )  VALUES ('$title','$desc','$phone',$selectedTal,'$path')";
+        $sql="INSERT INTO `complaint` ( `title`, `description`,`talukId`, `userId`,`image` )  VALUES ('$title','$desc',$selectedTal,'$userId','$hex')";
         if (mysqli_query($conn, $sql)) {
-          echo "<script>alert('Filed Complaint');";
-          header("Location:/view_compliant.php");
+          echo "<script>alert('Filed Complaint');</script>";
+          header("Location:view_complaint.php");
         }
         else {
           echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -68,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>SB Admin 2 - Blank</title>
+    <title>File Complaint</title>
     <!-- Custom fonts for this template-->
     <link
       rel="stylesheet"

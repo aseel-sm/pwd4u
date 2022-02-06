@@ -2,7 +2,15 @@
         <!-- Main Content -->
         <div id="content">
         <?php 
-     require_once(realpath(dirname(__FILE__))."/topbar.php")?>
+     require_once(realpath(dirname(__FILE__))."/topbar.php");
+     
+     require_once(realpath(dirname(__FILE__).'/../../library')."/utilities.php");
+     
+     $complaints=get_complaints_user_id($_SESSION['id'])
+     
+     
+     ?>
+     
 
           <!-- Begin Page Content -->
           <div class="container-fluid">

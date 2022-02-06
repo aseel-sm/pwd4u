@@ -186,3 +186,16 @@ function get_users_by_type($type)
 }
 // check_user_status(17)
 //  get_not_accepted_users(2)
+function get_complaints_user_id($id)
+{
+    global $conn;
+    $sql="select * from complaint where userId=$id";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+       
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
