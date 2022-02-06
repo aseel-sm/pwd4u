@@ -57,6 +57,10 @@ require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../js/demo/datatables-demo.js"></script>
+
 </body>
 
 

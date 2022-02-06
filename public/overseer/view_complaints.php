@@ -1,6 +1,9 @@
 <?php 
 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
+$type="overseer";
+
+require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,9 +50,9 @@ require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 
       <!-- Content Wrapper -->
          <!-- End of Content Wrapper -->
-View compliants
+
             <?php 
-	
+	 require_once(TEMPLATES_PATH . "\overseer\\view_complaints.php");
 
 
 ?>

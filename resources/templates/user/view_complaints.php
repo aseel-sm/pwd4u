@@ -16,7 +16,39 @@
           <div class="container-fluid">
             <!-- Page Heading -->
             <h1 class="h3 mb-4 text-gray-800">View Compliants</h1>
+
+            <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Not Accepted Users</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                  <tr>                  <th>ID</th>
+  <th>Title</th>
+  <th>Date</th>
+  <th>Status</th>
+</tr>
+</thead>
+<tbody>
+
+
+<?php 
+while ($complaint=mysqli_fetch_assoc($complaints)) {
+  $status=get_complaint_status($complaint['status']);
+  $time=convert_timestamp($complaint['createdAt']);
+echo "<tr><td>".$complaint['title']."</td><td>".$complaint['title']."</td><td>".$time."</td><td>".$status."</td></tr/>";
+}
+
+?>
+
+</tbody>
+</table>
           
+          </div>
+          </div>
+          </div>
           </div>
           <!-- /.container-fluid -->
         </div>

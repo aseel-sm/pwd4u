@@ -199,3 +199,46 @@ function get_complaints_user_id($id)
         echo mysqli_error($conn);
     }
 }
+
+function get_complaint_status($code){
+
+    if($code==0)
+    return "Submitted to overseer";
+    
+}
+
+
+function convert_timestamp($time){
+
+    $db = $time;
+    $timestamp = strtotime($db);
+    return date("m-d-Y H:i", $timestamp);
+    
+}
+
+
+function get_taluk_by_user_id($id){
+    global $conn;
+    $sql="SELECT tId FROM `overseer` WHERE id=$id";
+    if (mysqli_query($conn, $sql)) {
+        $result=mysqli_query($conn, $sql);
+        $result=mysqli_fetch_assoc($result);
+        return $result['tId'];
+    }
+}
+
+
+function get_complaints_by_taluk($id)
+{
+    global $conn;
+    $sql="select * from complaint where talukId=$id";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //    var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+// get_complaints_by_taluk(5);
