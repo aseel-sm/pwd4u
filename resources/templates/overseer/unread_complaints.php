@@ -8,7 +8,7 @@
 
      $userTaluk=get_taluk_by_user_id($_SESSION['id']);
      
-     $complaints=get_complaints_by_taluk($userTaluk);
+     $complaints=get_complaints_to_upload_by_taluk($userTaluk);
     //  var_dump($complaints)
      
      ?>
@@ -50,7 +50,7 @@
                      {
                          $date=convert_timestamp($complaint['createdAt']);
                          $pathToImage="../../uploaded_files/images/".$complaint['image'];
-                         echo $pathToImage;
+                      
                          $btn_image="";
                                                  echo "<tr>
                         <td>".$complaint['title']."</td>"
@@ -60,7 +60,7 @@
                       <?php echo "<td>".$complaint['description']."</td>
                         <td>".$date."</td>"?>
                         
-                        <td><button class='btn btn-info' data-toggle='modal' onclick="changeImage('<?php echo $pathToImage ?>')" data-target='#formModel' type='button'>View</button></td>
+                        <td><button class='btn btn-info' data-toggle='modal' onclick="setComplaintId('<?php echo $complaint['id'] ?>')" data-target='#formModel' type='button'>Upload</button></td>
 
                     <?php    
                        
@@ -126,10 +126,12 @@
      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
      <div class="form-row">
     <div class="form-group col-md-6">
+    <input type="text" required name="cId" hidden id="cId" value="" class="form-control">
+
       <label for="inputTitle">Upload analysis report</label>
-      <input type="file" name="analyisis" class="form-control" required id="inputTitle" accept="application/pdf">
+      <input type="file" required name="analyisis" class="form-control"  id="inputTitle" accept="application/pdf">
     </div> </div>
-    <button type="button" name="submit" class="btn btn-primary">Upload</button>
+    <button type="submit" name="submit" class="btn btn-primary">Upload</button>
      </form>
       </div>
    
@@ -143,6 +145,11 @@
 function changeImage(img) {
   
   document.getElementById("imageBox").src=img;
+
+}
+function setComplaintId(id) {
+  
+  document.getElementById("cId").value=id;
 
 }
 

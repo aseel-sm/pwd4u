@@ -1,7 +1,7 @@
 <?php 
 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
-$type="overseer";
+$type="engineer";
 
 require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
 ?> 
@@ -18,7 +18,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Dashboard - Contractor</title>
+    <title>SB Admin 2 - Blank</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -44,7 +44,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
         
         
         
-		 require_once(TEMPLATES_PATH . "\overseer\side_drawer.php");
+		 require_once(TEMPLATES_PATH . "\\engineer\side_drawer.php");
         ?>
     <!-- End of Sidebar -->
 
@@ -52,7 +52,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
          <!-- End of Content Wrapper -->
 
             <?php 
-	 require_once(TEMPLATES_PATH . "\overseer\\view_complaints.php");
+	 require_once(TEMPLATES_PATH . "\\engineer\\verify_report.php");
 
 
 ?>
@@ -72,13 +72,6 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
-
-           <!-- Page level plugins -->
-           <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 

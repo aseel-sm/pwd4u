@@ -2,8 +2,47 @@
 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
 $type="overseer";
-
+$errMsg="";
 require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+  if (isset($_POST['submit'])) {
+  
+   $compId= $_POST['cId'];
+    if (isset($_FILES['analyisis'])) {
+      $file_name = $_FILES['analyisis']['name'];
+      $file_size =$_FILES['analyisis']['size'];
+      $file_tmp =$_FILES['analyisis']['tmp_name'];
+      $file_type=$_FILES['analyisis']['type'];
+  } else {
+      $errMsg="File is required\n";
+  }
+  if ($errMsg=='') {
+    $hex=bin2hex(random_bytes('7'));
+    $path=ANALYSIS_PATH."/".$hex;
+    $userId=$_SESSION['id'];
+    if (move_uploaded_file($file_tmp, $path)) {
+      $sql="UPDATE `complaint` SET `oId`='$userId',`status`='1',`analysis`='$hex' WHERE id=$compId";
+      if (mysqli_query($conn, $sql)) {
+        echo "<script>alert('Analysis submitted');</script>";
+ header("Location:unread_complaints.php");
+      }
+      else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+  } else {
+     
+      echo "Error on Upload-----",$path,'\n';
+  }
+
+
+
+  }
+  }}
+
+
+
 ?> 
 <!DOCTYPE html>
 <html lang="en">

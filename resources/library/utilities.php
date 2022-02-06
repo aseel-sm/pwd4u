@@ -204,6 +204,9 @@ function get_complaint_status($code){
 
     if($code==0)
     return "Submitted to overseer";
+
+    if($code==1)
+    return "Analysis report submitted to engineer";
     
 }
 
@@ -228,6 +231,19 @@ function get_taluk_by_user_id($id){
 }
 
 
+function get_complaints_to_upload_by_taluk($id)
+{
+    global $conn;
+    $sql="select * from complaint where talukId=$id AND status=0";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //    var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
 function get_complaints_by_taluk($id)
 {
     global $conn;
