@@ -217,6 +217,11 @@ function get_complaint_status($code){
     return "Accepted by Administrator and Tender opened";
     if($code==6)
     return "Bid submitted.Waiting to confirm";
+    if($code==7)
+    return "Bid didn't approved.";
+    if($code==8)
+    return "Bid approved.Waiting to start work";
+
     
 }
 
@@ -365,6 +370,41 @@ function get_projects_overseer($id)
     global $conn;
     $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,complaint.initial,complaint.title FROM `project` as p
     INNER JOIN complaint ON complaint.id=p.cid WHERE complaint.oId=$id;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+
+function get_submitted_bid_by_project_id($id)
+{
+    global $conn;
+    $sql="SELECT b.bidId,b.projectId,b.contractorId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial,contractor.certificatePath,complaint.id as comp_id FROM `bids` as b
+    INNER JOIN project ON projectId=project.id 
+    LEFT JOIN complaint ON complaint.id=project.cId
+    LEFT JOIN contractor ON b.contractorId=contractor.cId
+     WHERE b.status=6 AND b.projectId=$id;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+
+function get_bidden_contractor($id)
+{
+    global $conn;
+    $sql="SELECT b.bidId,b.projectId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial FROM `bids` as b
+     INNER JOIN project ON projectId=project.id 
+     LEFT JOIN complaint ON complaint.id=project.cId
+      WHERE b.status>=8 AND b.contractorId=$id;";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     

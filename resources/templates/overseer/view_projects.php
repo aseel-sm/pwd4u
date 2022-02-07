@@ -71,7 +71,7 @@ Projects
                     ?>
   
   <td>
-                        <a target='_blank' href='../../uploaded_files/reports/<?php echo $tender['initial']?>'><button class='btn btn-primary my-2' type='button'>View Quotes</button></a>                        </td>
+                        <a href='view_bids.php?project_id=<?php echo $tender['pid']?>'><button class='btn btn-success my-2' type='button'>View Quotes</button></a>                        </td>
 
                     <?php
                     

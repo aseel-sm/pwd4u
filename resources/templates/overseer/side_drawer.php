@@ -83,7 +83,7 @@
               <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
             
               <a class="collapse-item" href="view_projects.php">View Projects</a>
-              <a class="collapse-item" href="approve_bids.php">Approve Bids</a>
+             
           
             
             </div>
