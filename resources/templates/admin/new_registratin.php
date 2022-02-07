@@ -161,8 +161,8 @@ if ($type==1) {
                                         }
                                         
                                         ?>
-<a href=""><button class="btn btn-success " type="button">Accept</button></a>
-<a href=""><button class="btn btn-danger my-2" type="button">Reject</button></a>
+<a href="../../resources/library/acceptUser.php?status=1&user=<?php echo $user['id'] ?>&type=<?php echo $user['type']?>"><button class="btn btn-success " type="button">Accept</button></a>
+<a href="../../resources/library/acceptUser.php?status=2&user=<?php echo $user['id'] ?>&type=<?php echo $user['type']?>"><button class="btn btn-danger my-2" type="button">Reject</button></a>
 <?php
 
 

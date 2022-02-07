@@ -45,6 +45,14 @@
             <i class="fas fa-fw fa-file"></i>
             <span>Analisys Reports</span>
           </a></li>
+        <li class="nav-item">
+          <a
+            class="nav-link "
+        href="view_projects.php"
+          >
+            <i class="fas fa-fw fa-project-diagram"></i>
+            <span>Projects</span>
+          </a></li>
         <!-- Divider -->
        
 
