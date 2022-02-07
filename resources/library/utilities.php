@@ -434,3 +434,20 @@ function get_projects_engineer($id)
         echo mysqli_error($conn);
     }
 }
+function get_projects_admin()
+{
+    global $conn;
+    $sql="SELECT p.id as pid, p.`cId`, p.status as pStatus,`tenderId`,p.start_date as sdate,p.completed_date,taluk.taluk_name,district.district,
+    p.completed_date as cdate,complaint.initial,complaint.title FROM `project` as p
+     INNER JOIN complaint ON complaint.id=p.cid 
+     INNER JOIN taluk ON taluk.id=complaint.talukId
+     INNER JOIN district ON district.id=taluk.dId;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}

@@ -12,7 +12,7 @@
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+          <div class="sidebar-brand-text mx-3">PWD4U</div>
         </a>
 
         <!-- Divider -->
@@ -67,31 +67,12 @@
           >
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseUtilities"
-            aria-expanded="true"
-            aria-controls="collapseUtilities"
+          <a class="nav-link" href="view_projects.php">
+            <i class="fas fa-fw fa-project-diagram"></i>
+            <span>Projects</span></a
           >
-            <i class="fas fa-fw fa-file"></i>
-            <span>Complaints</span>
-          </a>
-          <div
-            id="collapseUtilities"
-            class="collapse"
-            aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-              <a class="collapse-item" href="view_complaints.php">Verify Complaints</a>
-          
-              <a class="collapse-item" href="index.php">Other</a>
-            </div>
-          </div>
         </li>
+ 
 
         <!-- Divider -->
        
