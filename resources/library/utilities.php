@@ -211,6 +211,10 @@ function get_complaint_status($code){
     return "Verified by Senior Engineer and Initial report submitted";
     if($code==3)
     return "Rejected by Senior Engineer";
+    if($code==4)
+    return "Rejected by Administrator";
+    if($code==5)
+    return "Accepted by Administrator and Tender opened";
     
 }
 
@@ -279,6 +283,19 @@ function get_complaints_by_district($id)
 {
     global $conn;
     $sql="select * from complaint where status=1 AND talukId IN (SELECT id FROM taluk WHERE dId=$id)";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+function get_complaints_for_admin()
+{
+    global $conn;
+    $sql="select * from complaint where status=2";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     

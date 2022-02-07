@@ -61,6 +61,12 @@
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
+          <a class="nav-link" href="verify_report.php">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Verify Reports</span></a
+          >
+        </li>
+        <li class="nav-item">
           <a
             class="nav-link collapsed"
             href="#"
@@ -80,7 +86,7 @@
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-              <a class="collapse-item" href="view_complaints.php">View Complaints</a>
+              <a class="collapse-item" href="view_complaints.php">Verify Complaints</a>
           
               <a class="collapse-item" href="index.php">Other</a>
             </div>
