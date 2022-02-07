@@ -81,8 +81,8 @@
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-              <a class="collapse-item" href="add_quotation.php">Add Quotations</a>
-              <a class="collapse-item" href="view_quotation.php">View Quotations</a>
+            
+              <a class="collapse-item" href="view_projects.php">View Projects</a>
               <a class="collapse-item" href="approve_bids.php">Approve Bids</a>
           
             

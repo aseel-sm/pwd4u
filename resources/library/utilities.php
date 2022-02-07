@@ -360,3 +360,17 @@ function get_submitted_bid_contractor($id)
         echo mysqli_error($conn);
     }
 }
+function get_projects_overseer($id)
+{
+    global $conn;
+    $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,complaint.initial,complaint.title FROM `project` as p
+    INNER JOIN complaint ON complaint.id=p.cid WHERE complaint.oId=$id;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}

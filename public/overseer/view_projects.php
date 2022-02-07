@@ -52,7 +52,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
          <!-- End of Content Wrapper -->
 
             <?php 
-	 require_once(TEMPLATES_PATH . "\overseer\dashboard.php");
+	 require_once(TEMPLATES_PATH . "\overseer\\view_projects.php");
 
 
 ?>
@@ -72,6 +72,12 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
+               <!-- Page level plugins -->
+               <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 
