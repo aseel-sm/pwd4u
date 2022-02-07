@@ -307,3 +307,37 @@ function get_complaints_for_admin()
 }
 // get_district_by_user_id(20);
 // get_complaints_by_district(10);
+
+function get_tenders_contractor()
+{
+    global $conn;
+    $sql="SELECT *,project.id as projectId FROM `project` INNER JOIN complaint ON complaint.id=project.cId
+    INNER JOIN taluk ON complaint.talukId=taluk.id 
+    INNER JOIN district ON district.id=taluk.dId 
+    WHERE complaint.status=5;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+function get_tenders_by_id($id)
+{
+    global $conn;
+    $sql="SELECT *,project.id as projectId FROM `project` 
+    INNER JOIN complaint ON complaint.id=project.cId
+     INNER JOIN taluk ON complaint.talukId=taluk.id 
+     INNER JOIN district ON district.id=taluk.dId
+      WHERE complaint.status=5 AND project.id=$id;;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}

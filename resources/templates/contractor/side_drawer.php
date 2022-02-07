@@ -54,7 +54,7 @@
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-              <a class="collapse-item" href="utilities-color.html">Availiable Tenders</a>
+              <a class="collapse-item" href="available_tenders.php">Availiable Tenders</a>
           
               <a class="collapse-item" href="utilities-other.html">Bidden Tenders</a>
             </div>
