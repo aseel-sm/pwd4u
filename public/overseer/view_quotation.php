@@ -1,6 +1,9 @@
 <?php 
 
 require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
+$type="overseer";
+
+require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_redirect.php");
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Dashboard - Overseer</title>
+    <title>Dashboard - Contractor</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -49,11 +52,11 @@ require_once(realpath(dirname(__DIR__)."../../resources/")."/config.php");
          <!-- End of Content Wrapper -->
 
             <?php 
-	//  require_once(TEMPLATES_PATH . "\overseer\dashboard.php");
+	 require_once(TEMPLATES_PATH . "\overseer\dashboard.php");
 
 
 ?>
-  View Quotation
+  
     </div>
      <!-- End of Page Wrapper -->
 

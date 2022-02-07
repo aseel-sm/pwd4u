@@ -215,6 +215,8 @@ function get_complaint_status($code){
     return "Rejected by Administrator";
     if($code==5)
     return "Accepted by Administrator and Tender opened";
+    if($code==6)
+    return "Bid submitted.Waiting to confirm";
     
 }
 
@@ -332,6 +334,23 @@ function get_tenders_by_id($id)
      INNER JOIN taluk ON complaint.talukId=taluk.id 
      INNER JOIN district ON district.id=taluk.dId
       WHERE complaint.status=5 AND project.id=$id;;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
+
+function get_submitted_bid_contractor($id)
+{
+    global $conn;
+    $sql="SELECT b.bidId,b.projectId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial FROM `bids` as b
+     INNER JOIN project ON projectId=project.id 
+     LEFT JOIN complaint ON complaint.id=project.cId
+      WHERE b.status=6 AND b.contractorId=$id;";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     

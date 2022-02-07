@@ -52,7 +52,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
          <!-- End of Content Wrapper -->
 
             <?php 
-	 require_once(TEMPLATES_PATH . "\contractor\bidden_tenders.php");
+	 require_once(TEMPLATES_PATH . "\contractor\submitted_bids.php");
 
 
 ?>
