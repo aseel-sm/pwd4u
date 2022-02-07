@@ -451,3 +451,35 @@ function get_projects_admin()
         echo mysqli_error($conn);
     }
 }
+
+function process($sql){
+
+    global $conn;
+    
+    if (mysqli_query($conn, $sql)) {
+        $result=mysqli_query($conn, $sql);
+        $result=mysqli_fetch_assoc($result);
+       
+        return $result['count'];
+    }
+
+}
+
+function admin_dashboard(){
+   $sql="SELECT COUNT(id) as count FROM `project`" ;
+   $admin['project']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `project` WHERE status=10" ;
+   $admin['project_c']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=1" ;
+   $admin['public']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=2" ;
+   $admin['overseer']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=3" ;
+   $admin['contractor']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=4" ;
+   $admin['eng']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `complaint`" ;
+   $admin['eng']=process($sql);
+
+   return $admin;
+}
