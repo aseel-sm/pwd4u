@@ -8,7 +8,7 @@
 
      $userTaluk=get_taluk_by_user_id($_SESSION['id']);
      
-     $complaints=get_complaints_by_taluk($userTaluk);
+     $complaints=get_complaints_by_taluk($userTaluk,$_SESSION['id']);
     //  var_dump($complaints)
      
      ?>
@@ -20,7 +20,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                New Complaints
+               Complaints
                 </h6>
               </div>
               <div class="card-body">

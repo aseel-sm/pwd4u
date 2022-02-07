@@ -17,7 +17,7 @@ if (isset($_SESSION['authenticated'])&&isset($_SESSION['user_type'])) {
 require_once(realpath(dirname(__FILE__)."//resources/")."/config.php");
  require_once(realpath(dirname(__FILE__)."//resources/library")."/utilities.php");
 $errMsg="";
-$name =$phone="";
+$name =$email="";
 function test_input($data)
 {
     $data = trim($data);
@@ -27,11 +27,11 @@ function test_input($data)
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submit'])) {
-        $phone = test_input($_POST["phone"]);
-        $user_exist=is_user_exist($phone);
+        $email = test_input($_POST["email"]);
+        $user_exist=is_email_used($email);
         $password = test_input($_POST["password"]);
         if ($user_exist==1) {
-            $isAuthenticated=authenticate($phone, $password, 'users'); //check password and if true, return array(usertype,id) else array(-1)
+            $isAuthenticated=authenticate($email, $password, 'users'); //check password and if true, return array(usertype,id) else array(-1)
             $helllo=$isAuthenticated['status'];
         
             if ($isAuthenticated!==false) {
@@ -123,13 +123,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <fiv class="col-md-8">
                     <div class="form-group ">
                         <input
-                          type="text"
+                          type="email"
                           class="form-control"
                           id=""
-                          value="<?php echo $phone?>"
+                          value="<?php echo $email?>"
                           required
-                          name="phone"
-                          placeholder="Phone No"
+                          name="email"
+                          placeholder="Email"
                         />
                       </div>
                       <div class="form-group ">

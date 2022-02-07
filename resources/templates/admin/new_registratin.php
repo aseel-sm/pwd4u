@@ -80,7 +80,7 @@ if ($type==1) {
   <th>Phone</th>
   <th>Email</th>
   <th>Licence No</th>
-
+  <th>View Certificate</th>
   <th>Action</th>";
   }
   if ($type==4) {

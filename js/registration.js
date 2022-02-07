@@ -8,13 +8,13 @@ const value = selectBox.options[selectBox.selectedIndex].value;
 const onOptionChange = (type) => {
   if (type == 2 || type == 4) {
     qualification.classList.toggle("d-none");
-    certificate.classList.toggle("d-none");
+    certificate.classList.remove("d-none");
     district.classList.remove("d-none");
     licence.classList.add("d-none");
   } else if (type == 3) {
     licence.classList.toggle("d-none");
     qualification.classList.add("d-none");
-    certificate.classList.add("d-none");
+    certificate.classList.remove("d-none");
     district.classList.add("d-none");
     taluk.classList.add("d-none");
   } else {

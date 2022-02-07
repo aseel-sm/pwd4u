@@ -53,14 +53,22 @@ Projects
                     
                     while ($tender=mysqli_fetch_assoc($tenders))
                      {  
-                       
+                        $date="";
                           $bidStatus=get_complaint_status($tender['pStatus']);
+                          if($tender['pStatus']==9){
+                            $date=" on ".convert_timestamp($tender['sdate']);
+                            
+                          }
+                          if($tender['pStatus']==10){
+                            $date=" on ".convert_timestamp($tender['cdate']);
+                            
+                          }
                           $subDate="";
                                                  echo "<tr>
                         <td>".$tender['pid']."</td>"
                         ?>
 
-                      <?php echo "<td>".$bidStatus."</td>
+                      <?php echo "<td>".$bidStatus.$date."</td>
                         <td>".$tender['title']."</td>"?>
                         
                         <td>

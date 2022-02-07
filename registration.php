@@ -85,6 +85,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $errMsg=$errMsg."Licence number used\n";
                     }
                 }
+                if (isset($_FILES['certificate'])) {
+                  $file_name = $_FILES['certificate']['name'];
+                  $file_size =$_FILES['certificate']['size'];
+                  $file_tmp =$_FILES['certificate']['tmp_name'];
+                  $file_type=$_FILES['certificate']['type'];
+              } else {
+                  $errMsg=$errMsg."Certificate is required\n";
+              }
             }
             if ($confirm==$password && $errMsg=='') {
                 $sql = "INSERT INTO `users`( `name`, `email`, `phone`, `password`, `type`, `status`) VALUES
@@ -119,18 +127,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "Error: " . $sql_add_details . "<br>" . mysqli_error($conn);
                         }
                     }
-
-
-
-
-
                     if ($usertype==3) {
-                        $sql_add_details="INSERT INTO `contractor`(`cId`, `cLicense`) VALUES ('$new_user_id','$licence')";
+                        $path=CERTFICATE_PATH."/".$phone;
+                        if (move_uploaded_file($file_tmp, $path)) {
+                            $sql_add_details="INSERT INTO `contractor`(`cId`, `cLicense`, `certificatePath`) VALUES ('$new_user_id','$licence','$phone')";
+                        } else {
+                            $signUpSuccess=0;
+                            echo "Error on Upload-----",$path,'\n';
+                        }
                         if (!mysqli_query($conn, $sql_add_details)) {
                             $signUpSuccess=0;
-                            echo "Error:in contract " . $sql_add_details . "<br>" . mysqli_error($conn);
+                            echo "Error: " . $sql_add_details . "<br>" . mysqli_error($conn);
                         }
                     }
+
+
+
+
+
+              
 
 
                     if ($signUpSuccess==1) {
@@ -225,6 +240,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           value="<?php echo $phone?>"
                           required
                           name="phone"
+                          pattern='^[0-9]{10}$'
+                          title="Valid Phone no"
                           placeholder="Phone No"
                         />
                       </div>
@@ -342,10 +359,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       </div>
                    
                     <div class="form-row d-none"  data-certificate>
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-12">
                           
                  
-                        <label for="">Upload your certificate(PDF only)</label>
+                        <label for="">Upload your certificate(exprerince certificate for contractor. PDF only)</label>
                         <input
                           type="file" 
                           class="form-control"

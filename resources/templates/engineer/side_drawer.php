@@ -36,33 +36,7 @@
        
 
         <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseUtilities"
-            aria-expanded="true"
-            aria-controls="collapseUtilities"
-          >
-            <i class="fas fa-fw fa-project-diagram"></i>
-            <span>Projects</span>
-          </a>
-          <div
-            id="collapseUtilities"
-            class="collapse"
-            aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-              <a class="collapse-item" href="add_projects.php">Add Projects</a>
-          
-              <a class="collapse-item" href="view_projects.php">View Projects</a>
-              <a class="collapse-item" href="upload_details.php">Upload Details</a>
-            </div>
-          </div>
-        </li>
+   
         <li class="nav-item">
           <a
             class="nav-link "

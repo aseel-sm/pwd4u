@@ -1,14 +1,14 @@
 <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-        <?php 
+        <?php
      require_once(realpath(dirname(__FILE__))."/topbar.php");
      require_once(realpath(dirname(__FILE__).'/../../library')."/utilities.php");
 
 
 
      
-     $tenders=get_tenders_contractor();
+     $tenders=get_bidden_contractor($_SESSION['id']);
     //  var_dump($complaints)
      
      ?>
@@ -20,7 +20,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-Availiable Tenders
+Submitted Bids
                 </h6>
               </div>
               <div class="card-body">
@@ -33,14 +33,16 @@ Availiable Tenders
                   >
                     <thead>
                       <tr>
-                        <th>Title</th>
+                       
 
-                        <th>District</th>
-                        <th>Taluk</th>
-                      
-                     
+                        <th>Desc</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Duration</th>
+                        <th>Submission Date</th>
                         <th>Project Report</th>
-                        <th>Action</th>
+                        <th>Update Work Status</th>
+                  
                         
                       </tr>
                     </thead>
@@ -49,31 +51,54 @@ Availiable Tenders
 
                     <?php
                     
-                    while ($tender=mysqli_fetch_assoc($tenders))
-                     {  
-                       
+                    while ($bid=mysqli_fetch_assoc($tenders)) {
+                        $bidStatus=get_complaint_status($bid['status']);
+                        $subDate=convert_timestamp($bid['createdAt']);
+                        if($bid['status']==8)
+                        {
+                          $next="Stared";
+                          $newStatus=9;
+                        }
+                        else if($bid['status']==9)
+                        {
+                          $next="Completed";
+                          $newStatus=10;
+                        }
+                        else
+                        $next="NIL";
+                        $newStatus="";
 
-                 
-                                                 echo "<tr>
-                        <td>".$tender['title']."</td>"
+                        $confirmPath="../../resources/library/update_work_status.php?status=".$newStatus."&bid_id=".$bid['bidId']."&comp_id=".$bid['compId'];
+                        echo "<tr>
+                        <td>".$bid['bid_description']."</td>"
                         ?>
 
-                      <?php echo "<td>".$tender['district']."</td>
-                        <td>".$tender['taluk_name']."</td>"?>
+                      <?php echo "<td>".$bidStatus."</td>
+                        <td>".$bid['quoatation']."</td><td>".$bid['duration']."</td><td>".$subDate."</td>"?>
                         
                         <td>
-                        <a target='_blank' href='../../uploaded_files/reports/<?php echo $tender['initial']?>'><button class='btn btn-primary my-2' type='button'>View</button></a>                        </td>
-<td>
-    <a href="bid_tender.php?project_id=<?php echo $tender['projectId']?>&comp_id=<?php echo $tender['cId']?>"><button class='btn btn-info'   type='button'>Bid Now</button></a>
+                        <a target='_blank' href='../../uploaded_files/reports/<?php echo $bid['initial']?>'><button class='btn btn-primary my-2' type='button'>View</button></a>                        </td>
+
   
+                        <td>
+
+
+<?php if($next=="NIL")
+{
+  echo "Work Completed";
+
+}
+else
+{
+    ?>
+                        <a  href='<?php echo $confirmPath?>'><button class='btn btn-primary my-2' type='button'><?php echo $next?></button></a> </td>
 
 
 
 
 
-
-                    <?php    
-                       
+                    <?php
+}        
                    echo  "  </tr>";
                     }
                     ?>
@@ -89,7 +114,7 @@ Availiable Tenders
         <!-- End of Main Content -->
 
         <!-- Footer --> 
-      <?php 
+      <?php
      require_once(realpath(dirname(__DIR__))."/footer.php")?>
         <!-- End of Footer -->
       </div>

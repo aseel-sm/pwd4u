@@ -15,6 +15,7 @@ function is_user_exist($phone)
         }
     }
 }
+
 function is_email_used($email)
 {
     global $conn;
@@ -60,10 +61,10 @@ function get_userid_by_phone($phone)
     }
 }
 
-function authenticate($phone, $password, $tb_name)
+function authenticate($email, $password, $tb_name)
 {
     global $conn;
-    $sql="SELECT id,name,phone,password,type,status FROM `$tb_name` where phone='$phone'";
+    $sql="SELECT id,name,phone,password,type,status FROM `$tb_name` where email='$email'";
     if (mysqli_query($conn, $sql)) {
         $result=mysqli_query($conn, $sql);
         if (mysqli_num_rows($result)==1) {
@@ -221,6 +222,10 @@ function get_complaint_status($code){
     return "Bid didn't approved.";
     if($code==8)
     return "Bid approved.Waiting to start work";
+    if($code==9)
+    return "Work has been started";
+    if($code==10)
+    return "Work Completed";
 
     
 }
@@ -230,7 +235,7 @@ function convert_timestamp($time){
 
     $db = $time;
     $timestamp = strtotime($db);
-    return date("m-d-Y H:i", $timestamp);
+    return date("m-d-Y", $timestamp);
     
 }
 
@@ -259,10 +264,10 @@ function get_complaints_to_upload_by_taluk($id)
         echo mysqli_error($conn);
     }
 }
-function get_complaints_by_taluk($id)
+function get_complaints_by_taluk($id,$userId)
 {
     global $conn;
-    $sql="select * from complaint where talukId=$id";
+    $sql="select * from complaint where talukId=$id AND oId=$userId";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     
@@ -355,7 +360,7 @@ function get_submitted_bid_contractor($id)
     $sql="SELECT b.bidId,b.projectId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial FROM `bids` as b
      INNER JOIN project ON projectId=project.id 
      LEFT JOIN complaint ON complaint.id=project.cId
-      WHERE b.status=6 AND b.contractorId=$id;";
+      WHERE b.status>=6 AND b.contractorId=$id;";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     
@@ -368,7 +373,7 @@ function get_submitted_bid_contractor($id)
 function get_projects_overseer($id)
 {
     global $conn;
-    $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,complaint.initial,complaint.title FROM `project` as p
+    $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,p.start_date as sdate,p.completed_date as cdate,complaint.initial,complaint.title FROM `project` as p
     INNER JOIN complaint ON complaint.id=p.cid WHERE complaint.oId=$id;";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
@@ -401,7 +406,7 @@ function get_submitted_bid_by_project_id($id)
 function get_bidden_contractor($id)
 {
     global $conn;
-    $sql="SELECT b.bidId,b.projectId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial FROM `bids` as b
+    $sql="SELECT b.bidId,b.projectId,b.bid_description,b.status,b.createdAt,b.duration,b.quoatation,complaint.initial,complaint.id as compId FROM `bids` as b
      INNER JOIN project ON projectId=project.id 
      LEFT JOIN complaint ON complaint.id=project.cId
       WHERE b.status>=8 AND b.contractorId=$id;";
@@ -414,3 +419,4 @@ function get_bidden_contractor($id)
         echo mysqli_error($conn);
     }
 }
+
