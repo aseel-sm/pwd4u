@@ -1,5 +1,6 @@
      <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    
 }?>
      
      <!-- Topbar -->
@@ -43,7 +44,7 @@
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
                     >
-                    <?php $_SESSION['name']?></span
+                    <?php echo $_SESSION['name']?></span
                   > 
                 </a>     
               </li>

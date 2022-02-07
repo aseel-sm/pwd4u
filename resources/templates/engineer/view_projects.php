@@ -8,7 +8,7 @@
 
 
      
-     $tenders=get_projects_overseer($_SESSION['id']);
+     $tenders=get_projects_engineer($_SESSION['id']);
     //  var_dump($complaints)
      
      ?>
@@ -41,7 +41,7 @@ Projects
                     
                      
                         <th>Project Report</th>
-                        <th>Action</th>
+                  
                   
                         
                       </tr>
@@ -72,33 +72,11 @@ Projects
                         <td>".$tender['title']."</td>"?>
                         
                         <td>
-                        <a target='_blank' href='../../uploaded_files/reports/<?php echo $tender['initial']?>'><button class='btn btn-primary my-2' type='button'>View</button></a>                        </td>
-                    
-                    <?php 
-                    if($tender['pStatus']==5){
-                    ?>
-  
-  <td>
-                        <a href='view_bids.php?project_id=<?php echo $tender['pid']?>'><button class='btn btn-success my-2' type='button'>View Quotes</button></a>                        </td>
-
-                    <?php
-                    
-                    
-                    }
-                    else
-                    echo "<td>No action </td>"
-                    
-                    ?>
-  
-
-
-
-
-
-
+                        <a target='_blank' href='../../uploaded_files/reports/<?php echo $tender['initial']?>'><button class='btn btn-primary my-2' type='button'>View</button></a></td>                
+ 
                     <?php    
                        
-                   echo  "  </tr>";
+                   echo  "</tr>";
                     }
                     ?>
 

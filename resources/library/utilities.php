@@ -420,3 +420,17 @@ function get_bidden_contractor($id)
     }
 }
 
+function get_projects_engineer($id)
+{
+    global $conn;
+    $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,p.start_date as sdate,p.completed_date as cdate,complaint.initial,complaint.title FROM `project` as p
+    INNER JOIN complaint ON complaint.id=p.cid WHERE complaint.eId=$id;";
+    if (mysqli_query($conn, $sql)) {
+        $result= mysqli_query($conn, $sql);
+    
+    //   var_dump(mysqli_fetch_assoc($result));
+        return $result;
+    } else {
+        echo mysqli_error($conn);
+    }
+}
