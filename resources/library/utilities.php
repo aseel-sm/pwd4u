@@ -479,7 +479,39 @@ function admin_dashboard(){
    $sql="SELECT COUNT(id) as count FROM `users` WHERE type=4" ;
    $admin['eng']=process($sql);
    $sql="SELECT COUNT(id) as count FROM `complaint`" ;
-   $admin['eng']=process($sql);
+   $admin['complaint']=process($sql);
 
    return $admin;
+}
+function over_dashboard($user,$taluk){
+   $sql="SELECT COUNT(id) as count FROM `complaint` WHERE oId=$user" ;
+   $over['comp_res']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `complaint` WHERE talukId=$taluk AND status=0" ;
+   $over['comp_new']=process($sql);
+   $sql="SELECT COUNT(project.id) as count FROM `project` LEFT JOIN complaint ON complaint.id=project.cId WHERE complaint.oId=$user AND complaint.status=5" ;
+   $over['new_tender']=process($sql);
+   $sql="SELECT COUNT(project.id) as count FROM `project` LEFT JOIN complaint ON complaint.id=project.cId WHERE complaint.oId=$user AND complaint.status=10" ;
+   $over['work_done']=process($sql);
+   $sql="SELECT COUNT(bids.bidId) as count FROM `bids`
+   LEFT JOIN project ON project.id=bids.projectId
+   LEFT JOIN complaint ON complaint.id=project.cId WHERE complaint.oId=$user AND bids.status=6" ;
+   $over['new_quote']=process($sql);
+  
+
+   return $over;
+}
+function eng_dashboard($user,$dis){
+   $sql="SELECT COUNT(complaint.id) as count FROM `complaint`
+   LEFT JOIN taluk ON taluk.id=complaint.talukId
+   WHERE taluk.dId=$dis AND complaint.status=1";
+   $eng['new_ans']=process($sql);
+ 
+   $sql="SELECT COUNT(project.id) as count FROM `project` 
+   LEFT JOIN complaint ON complaint.id=project.cId
+   WHERE complaint.eId=$user AND complaint.status>=5" ;
+   $eng['project_acc']=process($sql);
+   
+  
+
+   return $eng;
 }
