@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errMsg=$errMsg."Wrong Password\n";
             }
         } else {
-            $errMsg=$errMsg."User phone number doesnt exist\n";
+            $errMsg=$errMsg."User email doesn't exist\n";
         }
     }
 }

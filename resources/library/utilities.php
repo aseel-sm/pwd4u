@@ -529,3 +529,15 @@ function cont_dashboard($cId){
  
     return $cont;
  }
+
+
+function user_dashboard($id){
+    $sql="SELECT COUNT(id) as count FROM `complaint` WHERE userId=$id" ;
+    $user['filed']=process($sql);
+    $sql="SELECT COUNT(id) as count FROM `complaint` WHERE userId=$id AND status=10" ;
+    $user['solved']=process($sql);
+
+   
+ 
+    return $user;
+ }
