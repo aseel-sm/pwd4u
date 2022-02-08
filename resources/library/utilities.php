@@ -515,3 +515,17 @@ function eng_dashboard($user,$dis){
 
    return $eng;
 }
+
+
+function cont_dashboard($cId){
+    $sql="SELECT COUNT(bidId) as count FROM `bids`WHERE contractorId=$cId" ;
+    $cont['sub']=process($sql);
+    $sql="SELECT COUNT(id) as count FROM `project` WHERE status=5" ;
+    $cont['avail']=process($sql);
+    $sql="SELECT COUNT(bidId) as count FROM `bids`WHERE contractorId=$cId AND status>=8" ;
+    $cont['bidden']=process($sql);
+
+   
+ 
+    return $cont;
+ }
