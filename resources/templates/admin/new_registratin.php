@@ -132,12 +132,15 @@ if ($type==1) {
                              ";
                                         }
                                         if ($type==3) {
+                                          $cert="<a target='_blank' href='../../uploaded_files/certificates/".$user['certificatePath']."'><button class='btn btn-danger my-2' type='button'>View</button></a>";
+
                                             echo "     <tr>
                                    <td>". $user['id']."</td>
                                    <td> ". $user['name']."</td>
                                    <td>". $user['phone']."</td>
                                    <td>". $user['email']."</td>
                                    <td>". $user['cLicense']."</td>
+                                   <td>". $cert."</td>
 
                                    <td>
                                 

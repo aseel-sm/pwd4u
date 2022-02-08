@@ -41,6 +41,7 @@ Projects
                     
                      
                         <th>Project Report</th>
+                        <th>Contractor</th>
                         <th>Action</th>
                   
                         
@@ -73,6 +74,9 @@ Projects
                         
                         <td>
                         <a target='_blank' href='../../uploaded_files/reports/<?php echo $tender['initial']?>'><button class='btn btn-primary my-2' type='button'>View</button></a>                        </td>
+                    
+                        <td>
+                        <a target='_blank' href='../../uploaded_files/certificates/<?php echo $tender['certificatePath']?>'><button class='btn btn-primary my-2' type='button'>View</button></a>                        </td>
                     
                     <?php 
                     if($tender['pStatus']==5){

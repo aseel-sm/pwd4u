@@ -320,13 +320,13 @@ function get_complaints_for_admin()
 // get_district_by_user_id(20);
 // get_complaints_by_district(10);
 
-function get_tenders_contractor()
+function get_tenders_contractor($contId)
 {
     global $conn;
     $sql="SELECT *,project.id as projectId FROM `project` INNER JOIN complaint ON complaint.id=project.cId
     INNER JOIN taluk ON complaint.talukId=taluk.id 
     INNER JOIN district ON district.id=taluk.dId 
-    WHERE complaint.status=5;";
+    WHERE project.status=5 AND project.id NOT IN (SELECT projectId FROM `bids` WHERE contractorId=$contId);";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     
@@ -373,8 +373,12 @@ function get_submitted_bid_contractor($id)
 function get_projects_overseer($id)
 {
     global $conn;
-    $sql="SELECT p.id as pid, `cId`, p.status as pStatus,`tenderId`,p.start_date as sdate,p.completed_date as cdate,complaint.initial,complaint.title FROM `project` as p
-    INNER JOIN complaint ON complaint.id=p.cid WHERE complaint.oId=$id;";
+    $sql="SELECT p.id as pid, p.cId, p.status as pStatus,`tenderId`,p.start_date as sdate,p.completed_date as cdate,complaint.initial,complaint.title,contractor.certificatePath FROM `project` as p
+    INNER JOIN complaint ON complaint.id=p.cid
+    INNER JOIN bids ON bids.bidId=p.tenderId
+    INNER JOIN contractor ON bids.contractorId=contractor.cId
+
+     WHERE complaint.oId=$id;";
     if (mysqli_query($conn, $sql)) {
         $result= mysqli_query($conn, $sql);
     
@@ -522,7 +526,7 @@ function eng_dashboard($user,$dis){
 function cont_dashboard($cId){
     $sql="SELECT COUNT(bidId) as count FROM `bids`WHERE contractorId=$cId" ;
     $cont['sub']=process($sql);
-    $sql="SELECT COUNT(id) as count FROM `project` WHERE status=5" ;
+    $sql="SELECT COUNT(id) as count FROM `project` WHERE status=5 AND project.id NOT IN (SELECT projectId FROM `bids` WHERE contractorId=$cId)" ;
     $cont['avail']=process($sql);
     $sql="SELECT COUNT(bidId) as count FROM `bids`WHERE contractorId=$cId AND status>=8" ;
     $cont['bidden']=process($sql);

@@ -8,7 +8,7 @@
 
 
      
-     $tenders=get_tenders_contractor();
+     $tenders=get_tenders_contractor($_SESSION['id']);
     //  var_dump($complaints)
      
      ?>
