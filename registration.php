@@ -426,7 +426,7 @@ $.ajax({
     let options = JSON.parse(data);
     for (i = 0; i < options.data.length; i++) {
       $("#taluk").append(`<option value="${options.data[i].id}">
-   ${options.data[i].name}
+   ${options.data[i].taluk_name}
 </option>`);
     }
   },

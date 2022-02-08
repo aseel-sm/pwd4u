@@ -63,7 +63,7 @@ $district_list=get_districts()
   </div>
   <div class="form-group">
     <label for="inputDesc">Description</label>
-    <input required type="text"name="desc" class="form-control" id="inputDesc" placeholder="Lorem Ipsum">
+    <input required type="text"name="desc" class="form-control" id="inputDesc" placeholder="Specify Location etc">
   </div>
  
 <div> <?php echo $errMsg?></div>

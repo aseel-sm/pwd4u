@@ -130,7 +130,7 @@ function get_not_accepted_users($type)
     
     if ($type==2) {
         $table="overseer";
-        $sql="SELECT * FROM users INNER JOIN `$table` ON `$table`.id=`users`.id INNER JOIN taluk ON taluk.id=`$table`.tId INNER JOIN district ON taluk.dId =district.id  WHERE status =0";
+        $sql="SELECT * ,users.id as id FROM users INNER JOIN `$table` ON `$table`.id=`users`.id INNER JOIN taluk ON taluk.id=`$table`.tId INNER JOIN district ON taluk.dId =district.id  WHERE status =0";
     }
     if ($type==3) {
         $table="contractor";
@@ -138,7 +138,7 @@ function get_not_accepted_users($type)
     }
     if ($type==4) {
         $table="engineer";
-        $sql="SELECT * FROM users INNER JOIN `$table` ON `$table`.id=`users`.id  INNER JOIN district ON `$table`.dId =district.id  WHERE status =0";
+        $sql="SELECT *,users.id as id FROM users INNER JOIN `$table` ON `$table`.id=`users`.id  INNER JOIN district ON `$table`.dId =district.id  WHERE status =0";
     }
     global $conn;
    

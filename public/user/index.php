@@ -15,7 +15,7 @@ require_once(realpath(dirname(__DIR__)."../../resources/library/")."/no_access_r
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>SB Admin 2 - Blank</title>
+    <title>PWD4U</title>
     <!-- Custom fonts for this template-->
     <link
       rel="stylesheet"

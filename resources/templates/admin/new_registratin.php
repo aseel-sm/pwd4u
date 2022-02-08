@@ -10,6 +10,7 @@
         $type=$_GET['user_type'];
 
      $users=get_not_accepted_users($type);
+      // var_dump(mysqli_fetch_assoc($users));
 
     // echo realpath(dirname(__DIR__)."/../library")
      ?>
