@@ -106,10 +106,7 @@
       <div class="modal-body">
      <img src="" alt="no-preview" id="imageBox" style="height:100%;width:100%;">
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+   
     </div>
   </div>
 </div>

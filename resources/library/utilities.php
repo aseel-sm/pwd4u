@@ -470,14 +470,16 @@ function admin_dashboard(){
    $admin['project']=process($sql);
    $sql="SELECT COUNT(id) as count FROM `project` WHERE status=10" ;
    $admin['project_c']=process($sql);
-   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=1" ;
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=1 AND status=1" ;
    $admin['public']=process($sql);
-   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=2" ;
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=2 AND status=1" ;
    $admin['overseer']=process($sql);
-   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=3" ;
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=3 AND status=1" ;
    $admin['contractor']=process($sql);
-   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=4" ;
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE type=4 AND status=1" ;
    $admin['eng']=process($sql);
+   $sql="SELECT COUNT(id) as count FROM `users` WHERE status=0" ;
+   $admin['to_accept']=process($sql);
    $sql="SELECT COUNT(id) as count FROM `complaint`" ;
    $admin['complaint']=process($sql);
 
